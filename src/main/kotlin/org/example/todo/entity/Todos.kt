@@ -9,7 +9,7 @@ import jakarta.persistence.Id
 data class Todos(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long?= null,
+    val id: Long? = null,
     val title: String,
     val finished: Boolean
 )

@@ -1,4 +1,3 @@
-
 group = "org.example"
 version = "1.0.0"
 
@@ -25,13 +24,25 @@ plugins {
     kotlin("kapt") version "1.9.25" // Add this line
     id("org.springframework.boot") version "3.3.3"
     id("io.spring.dependency-management") version "1.1.6"
-//    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 kapt {
     arguments {
         arg("querydsl.entityAccessors", "true")
         arg("querydsl.useKotlinSerialization", "true")
+    }
+}
+
+tasks.jar {
+    archiveBaseName.set("todo")
+    archiveVersion.set("")
+}
+
+tasks.register("ktlint") {
+    dependsOn("ktlintFormat", "ktlintCheck")
+    doLast {
+        println("Formatting and checking code with ktlint...")
     }
 }
 
@@ -45,33 +56,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    runtimeOnly ("com.mysql:mysql-connector-j")
+    runtimeOnly("com.mysql:mysql-connector-j")
     implementation("com.querydsl:querydsl-jpa")
     kapt("com.querydsl:querydsl-apt")
     kapt("org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final")
-
 }
-
-tasks.jar {
-    archiveBaseName.set("todo")
-    archiveVersion.set("")
-}
-
-//ktlint {
-//    // ktlint 설정
-//    android.set(false)
-//    outputToConsole.set(true)
-//    ignoreFailures.set(false)
-//    debug.set(true)
-//    verbose.set(true)
-//}
-
-
-//tasks.named("ktlint") {
-//    doLast {
-//        println("Formatting code with ktlint...")
-//    }
-//}
 
 tasks.withType<Test> {
     useJUnitPlatform()
