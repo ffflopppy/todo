@@ -21,7 +21,6 @@ class TodoServiceTest {
 
     @BeforeEach
     fun setUp() {
-        // 테스트 전에 데이터 삽입
         todoRepository.save(Todos(title = "Test Task 1", finished = false))
         todoRepository.save(Todos(title = "Test Task 2", finished = true))
     }
